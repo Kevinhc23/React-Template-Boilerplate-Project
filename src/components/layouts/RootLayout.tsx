@@ -1,5 +1,5 @@
 import { Outlet } from "react-router";
-import { AppProviders } from "@/app/providers/appProviders";
+import { AppProviders } from "@/app/providers/AppProviders";
 
 export const RootLayout = () => {
   return (
