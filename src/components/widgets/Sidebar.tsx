@@ -1,9 +1,16 @@
-import type { FC } from "react";
+import type { FC, CSSProperties } from "react";
 
-interface SidebarProps extends React.ComponentProps<"aside"> {}
+interface SidebarProps extends React.ComponentProps<"aside"> {
+  width?: number;
+}
 
-const Sidebar: FC<SidebarProps> = ({ style, ...rest }) => {
-  return <aside {...rest} style={{ ...style }}></aside>;
+const Sidebar: FC<SidebarProps> = ({ width, style, ...rest }) => {
+  const sidebarStyle: CSSProperties = {
+    width: width ? `${width}px` : undefined,
+    ...style,
+  };
+
+  return <aside {...rest} style={sidebarStyle}></aside>;
 };
 
 export default Sidebar;

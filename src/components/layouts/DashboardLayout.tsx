@@ -1,62 +1,74 @@
-import type { FC, CSSProperties } from "react";
+import { useState, type FC, type CSSProperties } from "react";
 import { Outlet } from "react-router";
 import Sidebar from "@/components/widgets/Sidebar";
+import { DashboardLayoutContext } from "@/app/contexts/DashboardLayout.context";
 
 interface Props extends React.ComponentProps<"div"> {}
 
 const styles = {
-  container: {
+  container: (sidebarWidth: number): CSSProperties => ({
     display: "grid",
     minHeight: "100dvh",
-    width: "100dvw",
+    width: "100%",
     overflow: "hidden",
-    gridTemplateColumns: "200px 1fr",
+    gridTemplateColumns: `${sidebarWidth}px 1fr`,
     gridTemplateRows: "auto 1fr",
     gridTemplateAreas: `
       "sidebar header"
       "sidebar content"
     `,
-  },
+    transition: "grid-template-columns 200ms ease",
+  }),
   sidebar: {
     gridArea: "sidebar",
     overflowY: "auto",
-    height: "100%",
-    width: "200px",
-    position: "sticky",
-    top: 0,
-    bottom: 0,
-    left: 0,
-    zIndex: 100,
+    zIndex: 10,
   },
   header: {
     gridArea: "header",
     padding: "1rem",
-    backgroundColor: "#fff",
-    borderBottom: "1px solid #ccc",
+    borderBottom: "1px solid #e5e7eb",
   },
   content: {
     gridArea: "content",
     padding: "1rem",
     overflowY: "auto",
-    height: "100%",
-    width: "100%",
-    position: "sticky",
-    top: 0,
-    bottom: 0,
-    right: 0,
-    zIndex: 100,
   },
-} satisfies Record<string, CSSProperties>;
+} satisfies Record<string, CSSProperties | ((n: number) => CSSProperties)>;
 
-const DashboardLayout: FC<Props> = ({ style, ...rest }) => {
+const EXPANDED_WIDTH = 240;
+const COLLAPSED_WIDTH = 90;
+
+const DashboardLayout: FC<Props> = ({ ...rest }) => {
+  const [sidebarWidth, setSidebarWidth] = useState(EXPANDED_WIDTH);
+
+  const isCollapsed = sidebarWidth === COLLAPSED_WIDTH;
+
+  const toggleSidebar = () => {
+    setSidebarWidth((w) =>
+      w === EXPANDED_WIDTH ? COLLAPSED_WIDTH : EXPANDED_WIDTH,
+    );
+  };
+
   return (
-    <div {...rest} style={{ ...styles.container, ...style }}>
-      <Sidebar style={styles.sidebar} />
-      <header style={styles.header}></header>
-      <main style={styles.content}>
-        <Outlet />
-      </main>
-    </div>
+    <DashboardLayoutContext.Provider
+      value={{
+        sidebarWidth,
+        isCollapsed,
+        toggleSidebar,
+        setSidebarWidth,
+      }}
+    >
+      <div {...rest} style={styles.container(sidebarWidth)}>
+        <Sidebar width={sidebarWidth} style={styles.sidebar} />
+
+        <header style={styles.header}></header>
+
+        <main style={styles.content}>
+          <Outlet />
+        </main>
+      </div>
+    </DashboardLayoutContext.Provider>
   );
 };
 

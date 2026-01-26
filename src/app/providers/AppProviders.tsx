@@ -1,4 +1,5 @@
 import type { JSX, ReactNode } from "react";
+import { TanStackProvider } from "@/app/providers/TanStackProvider";
 
 type Props = { children: ReactNode };
 type Provider = (p: Props) => JSX.Element;
@@ -14,4 +15,4 @@ export const composeProviders = (...p: Provider[]) =>
     ({ children }: Props) => <>{children}</>,
   );
 
-export const AppProviders = composeProviders();
+export const AppProviders = composeProviders(TanStackProvider);
