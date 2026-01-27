@@ -10,7 +10,7 @@ const styles = {
     display: "grid",
     minHeight: "100dvh",
     overflow: "hidden",
-    gridTemplateColumns: "90px 1fr",
+    gridTemplateColumns: "64px 1fr",
     gridTemplateRows: "auto 1fr",
     gridTemplateAreas: `
       "sidebar header"
@@ -31,6 +31,7 @@ const styles = {
     gridArea: "content",
     padding: "1rem",
     overflowY: "auto",
+    backgroundColor: "#f9fafb",
   },
 } satisfies Record<string, CSSProperties>;
 

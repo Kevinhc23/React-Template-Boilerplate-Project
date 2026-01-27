@@ -15,6 +15,10 @@ const queryClient = new QueryClient({
   },
 });
 
+/**
+ * The TanStack Query provider component.
+ * It provides the query client to the application.
+ */
 export const TanStackProvider = ({
   children,
 }: {

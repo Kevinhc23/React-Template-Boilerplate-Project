@@ -4,7 +4,12 @@ import { TanStackProvider } from "@/app/providers/TanStackProvider";
 type Props = { children: ReactNode };
 type Provider = (p: Props) => JSX.Element;
 
-export const composeProviders = (...p: Provider[]) =>
+/**
+ * Composes multiple provider components into a single provider.
+ * @param p - The provider components to compose.
+ * @returns A single provider component.
+ */
+const composeProviders = (...p: Provider[]) =>
   p.reduceRight(
     (Acc, P) =>
       ({ children }: Props) => (
@@ -15,4 +20,6 @@ export const composeProviders = (...p: Provider[]) =>
     ({ children }: Props) => <>{children}</>,
   );
 
-export const AppProviders = composeProviders(TanStackProvider);
+const AppProviders = composeProviders(TanStackProvider);
+
+export default AppProviders;
