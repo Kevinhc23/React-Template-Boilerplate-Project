@@ -1,8 +1,9 @@
-import type { JSX, ReactNode } from "react";
+import type { ComponentType, ReactNode } from "react";
 import { TanStackProvider } from "@/app/providers/TanStackProvider";
+import ErrorBoundary from "@/components/widgets/ErrorBoundary";
 
 type Props = { children: ReactNode };
-type Provider = (p: Props) => JSX.Element;
+type Provider = ComponentType<Props>;
 
 /**
  * Composes multiple provider components into a single provider.
@@ -20,6 +21,6 @@ const composeProviders = (...p: Provider[]) =>
     ({ children }: Props) => <>{children}</>,
   );
 
-const AppProviders = composeProviders(TanStackProvider);
+const AppProviders = composeProviders(ErrorBoundary, TanStackProvider);
 
 export default AppProviders;

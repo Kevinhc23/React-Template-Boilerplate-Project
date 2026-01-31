@@ -3,14 +3,14 @@ import { Outlet } from "react-router";
 import Sidebar from "@/components/widgets/Sidebar";
 import Header from "@/components/widgets/Header";
 
-interface Props extends React.ComponentProps<"div"> {}
+type Props = React.ComponentProps<"div">;
 
 const styles = {
   container: {
     display: "grid",
     minHeight: "100dvh",
     overflow: "hidden",
-    gridTemplateColumns: "64px 1fr",
+    gridTemplateColumns: "auto 1fr",
     gridTemplateRows: "auto 1fr",
     gridTemplateAreas: `
       "sidebar header"
