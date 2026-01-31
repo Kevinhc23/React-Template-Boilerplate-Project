@@ -12,7 +12,7 @@ import { API_BASE_URL, APP_ENV, APP_NAME } from "@/shared/config/const";
  * });
  */
 export const api = axios.create({
-    baseURL: API_BASE_URL,
+    baseURL: APP_ENV === "production" ? API_BASE_URL : "/api",
     headers: {
         "Content-Type": "application/json",
         "Accept": "application/json",
