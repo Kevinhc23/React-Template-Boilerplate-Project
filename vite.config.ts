@@ -17,6 +17,15 @@ export default defineConfig(({ mode }) => {
         },
       }),
     ],
+    build: {
+      manifest: true,
+      cssMinify: true,
+      minify: true,
+      license: {
+        fileName: "LICENSE",
+      },
+      sourcemap: env.VITE_ENV === "development",
+    },
     server: {
       proxy: {
         "/api": {
@@ -25,6 +34,9 @@ export default defineConfig(({ mode }) => {
           rewrite: (path) => path.replace(/^\/api/, ""),
         },
       },
+      cors: {
+        origin: "*",
+      }
     },
     resolve: {
       alias: {
