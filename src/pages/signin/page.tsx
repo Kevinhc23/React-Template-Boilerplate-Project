@@ -3,8 +3,6 @@ import { useLoadingStore } from "@/app/store/useLoadingStore";
 import { useNavigate } from "react-router"; // O tu router preferido
 
 const SignInPage = () => {
-  throw new Error("Error al iniciar sesión");
-
   const showLoading = useLoadingStore((state) => state.showLoading);
   const hideLoading = useLoadingStore((state) => state.hideLoading);
   const navigate = useNavigate();

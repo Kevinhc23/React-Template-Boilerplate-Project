@@ -2,6 +2,7 @@ import { createBrowserRouter } from "react-router";
 import RootLayout from "@/components/layouts/RootLayout";
 import DashboardLayout from "@/components/layouts/DashboardLayout";
 import SignInPage from "@/pages/signin/page";
+import ProfilePage from "@/pages/profile/page";
 
 /**
  * The router configuration for the application.
@@ -16,6 +17,10 @@ const router = createBrowserRouter([
         // Sign in page
         index: true,
         element: <SignInPage />,
+      },
+      {
+        path: "profile",
+        element: <ProfilePage />,
       },
       {
         // Dashboard layout for authenticated users
