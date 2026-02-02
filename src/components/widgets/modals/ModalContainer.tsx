@@ -32,10 +32,10 @@ const ModalContainer: FC = () => {
           >
             <button
               onClick={closeModal}
-              className="absolute top-4 right-4 p-2 rounded-full bg-slate-100 hover:bg-slate-200 transition-colors duration-200 z-10 cursor-pointer"
+              className="absolute top-4 right-4 p-2 rounded-full bg-slate-50 hover:bg-slate-100 transition-colors duration-200 z-10 cursor-pointer"
               aria-label="Close modal"
             >
-              <X className="h-5 w-5 text-slate-600" />
+              <X className="size-4 text-slate-600" />
             </button>
 
             <ModalView {...data} />

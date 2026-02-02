@@ -2,6 +2,8 @@ import type { FC } from "react";
 import { Ghost, Home, Search, Plus, Heart, User, Menu } from "lucide-react";
 import { Link } from "react-router";
 import { cn } from "@/lib/utils";
+import { useModalStore } from "@/app/store/useModalStore";
+import { UserModal } from "./modals/UserModal";
 
 interface SidebarProps extends React.ComponentProps<"aside"> {}
 
@@ -13,41 +15,34 @@ type NavItem = {
   onClick?: () => void;
 };
 
-const navItems: NavItem[] = [
-  {
-    to: "/",
-    icon: Home,
-    label: "Home",
-  },
-  {
-    to: "/search",
-    icon: Search,
-    label: "Search",
-  },
-  {
-    icon: Plus,
-    label: "Create",
-    isPrimary: true,
-    onClick: () => console.log("Abrir modal de crear"),
-  },
-  {
-    to: "/activity",
-    icon: Heart,
-    label: "Activity",
-  },
-  {
-    to: "/profile",
-    icon: User,
-    label: "Profile",
-  },
-];
+const Sidebar: FC<SidebarProps> = ({ className, ...rest }) => {
+  const openModal = useModalStore((s) => s.openModal);
 
-const Sidebar: FC<SidebarProps> = ({ style, ...rest }) => {
+  const navItems: NavItem[] = [
+    { to: "/", icon: Home, label: "Home" },
+    { to: "/search", icon: Search, label: "Search" },
+    {
+      icon: Plus,
+      label: "Create",
+      isPrimary: true,
+      onClick: () =>
+        openModal(UserModal, {
+          name: "Gemini",
+          role: "AI Collaborator",
+        }),
+    },
+    { to: "/activity", icon: Heart, label: "Activity" },
+    { to: "/profile", icon: User, label: "Profile" },
+  ];
+
   const itemClasses =
     "p-2 rounded-lg hover:bg-secondary/40 transition-colors w-full flex justify-center cursor-pointer";
 
   return (
-    <aside {...rest} style={style} className="border-r border-gray-200">
+    <aside
+      {...rest}
+      className={cn("border-r border-gray-200 h-screen", className)}
+    >
       <div
         className="flex flex-col gap-4 justify-between h-full p-4"
         aria-label="Sidebar"
@@ -60,10 +55,11 @@ const Sidebar: FC<SidebarProps> = ({ style, ...rest }) => {
           </div>
         </section>
 
-        <section aria-label="User" className="flex flex-col gap-3">
+        <section aria-label="Main navigation" className="flex flex-col gap-3">
           {navItems.map((item) => {
+            const Icon = item.icon;
             const content = (
-              <item.icon
+              <Icon
                 className={cn(
                   "size-6",
                   item.isPrimary ? "text-primary" : "text-zinc-500",
