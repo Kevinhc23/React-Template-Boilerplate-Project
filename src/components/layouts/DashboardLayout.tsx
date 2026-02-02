@@ -25,13 +25,10 @@ const styles = {
   header: {
     gridArea: "header",
     padding: "1rem",
-    borderBottom: "1px solid #e5e7eb",
   },
   content: {
     gridArea: "content",
-    padding: "1rem",
     overflowY: "auto",
-    backgroundColor: "#f9fafb",
   },
 } satisfies Record<string, CSSProperties>;
 

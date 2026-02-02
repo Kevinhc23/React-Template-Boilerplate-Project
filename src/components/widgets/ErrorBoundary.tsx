@@ -34,7 +34,7 @@ const Fallback: FC<FallbackProps> = ({ error, resetErrorBoundary }) => {
         </p>
 
         {process.env.NODE_ENV === "development" && (
-          <div className="mb-8 p-3 bg-slate-50 rounded-lg border border-slate-100">
+          <div className="mb-8 p-3 bg-slate-50 rounded-lg border border-slate-100 overflow-y-auto max-h-40">
             <code className="text-[10px] text-slate-400 break-all font-mono">
               {getErrorMessage(error)}
             </code>

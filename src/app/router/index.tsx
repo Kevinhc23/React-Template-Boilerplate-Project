@@ -14,8 +14,6 @@ const router = createBrowserRouter([
     element: <RootLayout />,
     children: [
       {
-        // Sign in page
-        index: true,
         element: <SignInPage />,
       },
       {
@@ -24,12 +22,20 @@ const router = createBrowserRouter([
       },
       {
         // Dashboard layout for authenticated users
-        path: "dashboard",
+        path: "/",
         element: <DashboardLayout />,
         children: [
           {
             index: true,
-            element: <div>Dashboard</div>,
+            element: (
+              <div className="max-w-2xl mx-auto border-zinc-200 border h-full rounded-t-3xl p-6">
+                <h1>Dashboard</h1>
+                <p>
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  Quisquam, quod.
+                </p>
+              </div>
+            ),
           },
         ],
       },
