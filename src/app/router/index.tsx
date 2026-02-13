@@ -28,7 +28,7 @@ const router = createBrowserRouter([
           {
             index: true,
             element: (
-              <div className="max-w-2xl mx-auto border-zinc-200 border h-full rounded-t-3xl p-6">
+              <div className="">
                 <h1>Dashboard</h1>
                 <p>
                   Lorem ipsum dolor sit amet consectetur adipisicing elit.

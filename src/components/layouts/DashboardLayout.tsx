@@ -29,6 +29,7 @@ const styles = {
   content: {
     gridArea: "content",
     overflowY: "auto",
+    padding: "1rem",
   },
 } satisfies Record<string, CSSProperties>;
 

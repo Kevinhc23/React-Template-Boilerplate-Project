@@ -1,42 +1,44 @@
 import type { FC } from "react";
-import { Ghost, Home, Search, Plus, Heart, User, Menu } from "lucide-react";
-import { Link } from "react-router";
+import {
+  Search,
+  Atom,
+  LayoutPanelLeft,
+  Settings,
+  Bug,
+  Plus,
+} from "lucide-react";
+import { Link, useLocation } from "react-router";
 import { cn } from "@/lib/utils";
-import { useModalStore } from "@/app/store/useModalStore";
-import { UserModal } from "./modals/UserModal";
 
 interface SidebarProps extends React.ComponentProps<"aside"> {}
 
 type NavItem = {
-  to?: string;
+  to: string;
   icon: FC<React.ComponentProps<"svg">>;
   label: string;
-  isPrimary?: boolean;
-  onClick?: () => void;
 };
 
 const Sidebar: FC<SidebarProps> = ({ className, ...rest }) => {
-  const openModal = useModalStore((s) => s.openModal);
+  const { pathname } = useLocation();
 
   const navItems: NavItem[] = [
-    { to: "/", icon: Home, label: "Home" },
+    { to: "/", icon: LayoutPanelLeft, label: "Dashboard" },
     { to: "/search", icon: Search, label: "Search" },
     {
+      to: "/create",
       icon: Plus,
       label: "Create",
-      isPrimary: true,
-      onClick: () =>
-        openModal(UserModal, {
-          name: "Gemini",
-          role: "AI Collaborator",
-        }),
     },
-    { to: "/activity", icon: Heart, label: "Activity" },
-    { to: "/profile", icon: User, label: "Profile" },
+    {
+      to: "/debug",
+      icon: Bug,
+      label: "Debug",
+    },
+    { to: "/settings", icon: Settings, label: "Settings" },
   ];
 
   const itemClasses =
-    "p-2 rounded-lg hover:bg-secondary/40 transition-colors w-full flex justify-center cursor-pointer";
+    "p-2 rounded-lg hover:bg-secondary/80 transition-colors w-full flex justify-center cursor-pointer";
 
   return (
     <aside
@@ -50,7 +52,7 @@ const Sidebar: FC<SidebarProps> = ({ className, ...rest }) => {
         <section aria-label="Top navigation">
           <div className="flex items-center gap-2 justify-center">
             <Link to="/">
-              <Ghost className="size-6 text-primary" />
+              <Atom className="size-6 text-primary" />
             </Link>
           </div>
         </section>
@@ -58,39 +60,27 @@ const Sidebar: FC<SidebarProps> = ({ className, ...rest }) => {
         <section aria-label="Main navigation" className="flex flex-col gap-3">
           {navItems.map((item) => {
             const Icon = item.icon;
-            const content = (
-              <Icon
-                className={cn(
-                  "size-6",
-                  item.isPrimary ? "text-primary" : "text-zinc-500",
-                )}
-              />
-            );
-
-            if (item.to) {
-              return (
-                <Link to={item.to} key={item.label} className={itemClasses}>
-                  {content}
-                </Link>
-              );
-            }
-
+            const content = <Icon className={cn("size-6")} />;
             return (
-              <button
+              <Link
+                to={item.to}
                 key={item.label}
-                onClick={item.onClick}
-                className={itemClasses}
-                type="button"
+                className={cn(
+                  itemClasses,
+                  pathname.search(item.to) === 0 && "text-primary",
+                )}
               >
                 {content}
-              </button>
+              </Link>
             );
           })}
         </section>
 
         <section aria-label="Bottom navigation" className="flex justify-center">
           <button className="p-2 rounded-lg hover:bg-secondary/40 transition-colors cursor-pointer">
-            <Menu className="size-6 text-zinc-500" />
+            <div className="size-6 bg-primary text-primary-foreground flex items-center justify-center rounded-full p-4">
+              <span>KH</span>
+            </div>
           </button>
         </section>
       </div>
