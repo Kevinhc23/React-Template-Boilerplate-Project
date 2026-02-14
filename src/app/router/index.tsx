@@ -2,7 +2,10 @@ import { createBrowserRouter } from "react-router";
 import RootLayout from "@/components/layouts/RootLayout";
 import DashboardLayout from "@/components/layouts/DashboardLayout";
 import SignInPage from "@/pages/signin/page";
-import ProfilePage from "@/pages/profile/page";
+import { lazy } from "react";
+
+const ProfilePage = lazy(() => import("@/pages/profile/page"));
+const HomePage = lazy(() => import("@/pages/home/page"));
 
 /**
  * The router configuration for the application.
@@ -27,15 +30,7 @@ const router = createBrowserRouter([
         children: [
           {
             index: true,
-            element: (
-              <div className="">
-                <h1>Dashboard</h1>
-                <p>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Quisquam, quod.
-                </p>
-              </div>
-            ),
+            element: <HomePage />,
           },
         ],
       },

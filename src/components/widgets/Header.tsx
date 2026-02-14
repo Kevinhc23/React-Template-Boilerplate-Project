@@ -7,7 +7,7 @@ const Header: FC<HeaderProps> = ({ className, ...rest }) => {
   return (
     <header
       className={cn(
-        "sticky top-0 z-50 w-full backdrop-blur border-border/40 py-2 h-auto",
+        "sticky top-0 z-50 w-full backdrop-blur py-2 h-auto border-b border-gray-200",
         className,
       )}
       {...rest}

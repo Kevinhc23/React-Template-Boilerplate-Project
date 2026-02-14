@@ -1,5 +1,5 @@
 import type { FC } from "react";
-import { Shell } from "lucide-react";
+import { Atom } from "lucide-react";
 import { createPortal } from "react-dom";
 import { useLoadingStore } from "@/app/store/useLoadingStore";
 import { motion, AnimatePresence } from "motion/react";
@@ -34,7 +34,7 @@ const LoadingOverlay: FC = () => {
                   animate={{ rotate: 360 }}
                   transition={{ repeat: Infinity, duration: 4, ease: "linear" }}
                 >
-                  <Shell className="h-10 w-10 text-primary" strokeWidth={1.2} />
+                  <Atom className="h-10 w-10 text-primary" strokeWidth={1.2} />
                 </motion.div>
               </div>
             </div>

@@ -1,11 +1,11 @@
 import type { FC } from "react";
 import {
-  Search,
   Atom,
   LayoutPanelLeft,
   Settings,
   Bug,
-  Plus,
+  Database,
+  FolderGit2,
 } from "lucide-react";
 import { Link, useLocation } from "react-router";
 import { cn } from "@/lib/utils";
@@ -23,12 +23,12 @@ const Sidebar: FC<SidebarProps> = ({ className, ...rest }) => {
 
   const navItems: NavItem[] = [
     { to: "/", icon: LayoutPanelLeft, label: "Dashboard" },
-    { to: "/search", icon: Search, label: "Search" },
     {
-      to: "/create",
-      icon: Plus,
-      label: "Create",
+      to: "/projects",
+      icon: FolderGit2,
+      label: "Projects",
     },
+    { to: "/database", icon: Database, label: "Database" },
     {
       to: "/debug",
       icon: Bug,
