@@ -3,10 +3,10 @@ import RootLayout from "@/components/layouts/RootLayout";
 import DashboardLayout from "@/components/layouts/DashboardLayout";
 import SignInPage from "@/pages/signin/page";
 import { lazy } from "react";
-import { authLoader } from "@/hooks/useAuth";
 
 const ProfilePage = lazy(() => import("@/pages/profile/page"));
 const HomePage = lazy(() => import("@/pages/home/page"));
+const NotFoundPage = lazy(() => import("@/pages/not-found/page"));
 
 /**
  * The router configuration for the application.
@@ -34,7 +34,15 @@ const router = createBrowserRouter([
             index: true,
             element: <HomePage />,
           },
+          {
+            path: "projects",
+            element: <div>Projects</div>,
+          },
         ],
+      },
+      {
+        path: "*",
+        element: <NotFoundPage />,
       },
     ],
   },

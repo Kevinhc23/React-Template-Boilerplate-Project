@@ -55,8 +55,8 @@ const SignInPage: FC = () => {
         <div className="relative z-10">
           <blockquote className="space-y-4">
             <p className="text-4xl font-medium leading-tight text-slate-100">
-              "La automatización de procesos nunca fue tan transparente y
-              eficiente."
+              "The automation of processes has never been so transparent and
+              efficient."
             </p>
             <footer className="text-lg text-white">
               Infrastructure Operations Team
@@ -74,11 +74,10 @@ const SignInPage: FC = () => {
         <div className="w-full max-w-[420px] space-y-8">
           <div className="space-y-2">
             <h2 className="text-3xl font-extrabold tracking-tight text-slate-900">
-              Iniciar Sesión
+              Sign In
             </h2>
             <p className="text-slate-500">
-              Utiliza tu cuenta corporativa para acceder a las estadísticas de
-              KPI.
+              Use your corporate account to access KPI statistics.
             </p>
           </div>
 
@@ -98,7 +97,7 @@ const SignInPage: FC = () => {
               </div>
               <div className="relative flex justify-center text-xs uppercase">
                 <span className="bg-white px-4 text-slate-400 tracking-widest">
-                  Seguridad Empresarial
+                  Business Security
                 </span>
               </div>
             </div>
@@ -109,20 +108,20 @@ const SignInPage: FC = () => {
                   <Lock className="h-3 w-3" />
                 </div>
                 <p className="text-xs leading-relaxed text-slate-600">
-                  Su inicio de sesión está protegido por políticas de acceso
-                  condicional y autenticación multifactor (MFA).
+                  Your login is protected by conditional access policies and
+                  multi-factor authentication (MFA).
                 </p>
               </div>
             </div>
           </div>
 
           <div className="text-center text-sm text-slate-400">
-            ¿Problemas con el acceso?{" "}
+            Problems with access?{" "}
             <Link
               to="/contact"
               className="font-semibold text-primary hover:underline"
             >
-              Contactar a IT
+              Contact IT
             </Link>
           </div>
         </div>

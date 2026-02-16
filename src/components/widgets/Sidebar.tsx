@@ -1,6 +1,5 @@
 import type { FC } from "react";
 import {
-  Atom,
   LayoutPanelLeft,
   Settings,
   Bug,
@@ -9,6 +8,8 @@ import {
 } from "lucide-react";
 import { Link, useLocation } from "react-router";
 import { cn } from "@/lib/utils";
+import { BancoGuayaquilIsotipoIcon } from "@/components/ui/icons";
+import { motion } from "motion/react";
 
 interface SidebarProps extends React.ComponentProps<"aside"> {}
 
@@ -38,7 +39,7 @@ const Sidebar: FC<SidebarProps> = ({ className, ...rest }) => {
   ];
 
   const itemClasses =
-    "p-2 rounded-lg hover:bg-secondary/80 transition-colors w-full flex justify-center cursor-pointer";
+    "p-2 rounded-lg hover:bg-primary/10 transition-colors w-full flex justify-center cursor-pointer";
 
   return (
     <aside
@@ -52,7 +53,7 @@ const Sidebar: FC<SidebarProps> = ({ className, ...rest }) => {
         <section aria-label="Top navigation">
           <div className="flex items-center gap-2 justify-center">
             <Link to="/">
-              <Atom className="size-6 text-primary" />
+              <BancoGuayaquilIsotipoIcon className="size-7 text-primary" />
             </Link>
           </div>
         </section>
@@ -60,17 +61,26 @@ const Sidebar: FC<SidebarProps> = ({ className, ...rest }) => {
         <section aria-label="Main navigation" className="flex flex-col gap-3">
           {navItems.map((item) => {
             const Icon = item.icon;
-            const content = <Icon className={cn("size-6")} />;
+            const isActive =
+              item.to === "/" ? pathname === "/" : pathname.startsWith(item.to);
             return (
               <Link
                 to={item.to}
                 key={item.label}
                 className={cn(
                   itemClasses,
-                  pathname.search(item.to) === 0 && "text-primary",
+                  isActive
+                    ? "bg-primary/10 text-primary"
+                    : "text-slate-400 hover:bg-primary/10 hover:text-primary",
                 )}
               >
-                {content}
+                <Icon className={cn("size-6 stroke-[1.5px]")} />
+                {isActive && (
+                  <motion.div
+                    layoutId="active-pill"
+                    className="absolute -left-5 w-1 h-6 bg-primary rounded-r-full"
+                  />
+                )}
               </Link>
             );
           })}

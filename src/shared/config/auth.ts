@@ -1,11 +1,11 @@
 import { type Configuration, type CacheOptions, LogLevel } from "@azure/msal-browser";
-import { APP_CLIENT_ID, APP_NAME, APP_VERSION, APP_URL, APP_TENANT_ID } from "@/shared/config/const";
+import { APP_CLIENT_ID, APP_NAME, APP_VERSION, APP_TENANT_ID } from "@/shared/config/const";
 
 export const msalConfig: Configuration = {
     auth: {
         clientId: APP_CLIENT_ID,
         authority: "https://login.microsoftonline.com/" + APP_TENANT_ID,
-        redirectUri: window.location.origin,
+        redirectUri: window.location.origin + "/dashboard",
         postLogoutRedirectUri: `${window.location.origin}/signin`,
 
     },

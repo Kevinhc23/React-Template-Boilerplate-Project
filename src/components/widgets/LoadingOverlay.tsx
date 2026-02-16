@@ -1,8 +1,8 @@
 import type { FC } from "react";
-import { Atom } from "lucide-react";
 import { createPortal } from "react-dom";
 import { useLoadingStore } from "@/app/store/useLoadingStore";
 import { motion, AnimatePresence } from "motion/react";
+import { BancoGuayaquilIsotipoIcon } from "@/components/ui/icons";
 
 const LoadingOverlay: FC = () => {
   const { isVisible, message } = useLoadingStore();
@@ -26,20 +26,20 @@ const LoadingOverlay: FC = () => {
             animate={{ scale: 1, opacity: 1, y: 0 }}
             exit={{ scale: 0.9, opacity: 0, y: 10 }}
             transition={{ type: "spring", damping: 25, stiffness: 300 }}
-            className="relative flex flex-col items-center gap-6 p-12 rounded-3xl bg-white shadow-[0_20px_60px_rgba(0,0,0,0.15)] border border-slate-50 w-1/4"
+            className="relative flex flex-col items-center gap-6 p-12 rounded-3xl bg-white"
           >
             <div className="relative flex items-center justify-center">
-              <div className="relative flex items-center justify-center bg-background p-5 rounded-full border border-background shadow-inner">
+              <div className="relative flex items-center justify-center rounded-full">
                 <motion.div
-                  animate={{ rotate: 360 }}
+                  animate={{ translateY: [0, -6, 0] }}
                   transition={{ repeat: Infinity, duration: 4, ease: "linear" }}
                 >
-                  <Atom className="h-10 w-10 text-primary" strokeWidth={1.2} />
+                  <BancoGuayaquilIsotipoIcon className="size-8 text-primary" />
                 </motion.div>
               </div>
             </div>
 
-            <div className="flex flex-col items-center gap-4 text-center">
+            <div className="flex flex-col items-center gap-6 text-center">
               <motion.p
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
@@ -59,7 +59,7 @@ const LoadingOverlay: FC = () => {
                       duration: 0.6,
                       delay: i * 0.15,
                     }}
-                    className="h-2 w-2 rounded-full bg-primary"
+                    className="size-1.5 rounded-full bg-primary"
                   />
                 ))}
               </div>
