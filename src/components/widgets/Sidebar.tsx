@@ -4,7 +4,7 @@ import {
   Settings,
   Bug,
   Database,
-  FolderGit2,
+  FolderKanban,
   HelpCircle,
 } from "lucide-react";
 import { Link, useLocation } from "react-router";
@@ -27,7 +27,7 @@ const Sidebar: FC<SidebarProps> = ({ className, ...rest }) => {
     { to: "/", icon: LayoutPanelLeft, label: "Dashboard" },
     {
       to: "/projects",
-      icon: FolderGit2,
+      icon: FolderKanban,
       label: "Projects",
     },
     { to: "/database", icon: Database, label: "Database" },

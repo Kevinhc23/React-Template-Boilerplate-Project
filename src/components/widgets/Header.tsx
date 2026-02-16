@@ -23,7 +23,7 @@ const Header: FC<HeaderProps> = ({ className, ...rest }) => {
   return (
     <header
       className={cn(
-        "sticky top-0 z-40 w-full bg-white border-b border-slate-100 px-8 h-16 flex items-center",
+        "sticky top-0 z-40 w-full bg-white border-b border-gray-200 px-8 h-16 flex items-center",
         className,
       )}
       {...rest}

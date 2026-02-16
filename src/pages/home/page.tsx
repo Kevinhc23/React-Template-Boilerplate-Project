@@ -7,8 +7,8 @@ type HomePageProps = {};
 
 const HomePage: FC<HomePageProps> = () => {
   return (
-    <div className="flex flex-col gap-6 w-full h-[calc(100vh-64px)] overflow-y-auto">
-      <header>
+    <div className="flex flex-col gap-6 w-full h-full overflow-y-auto">
+      <header className="flex flex-col gap-2">
         <h1 className="text-3xl text-primary font-medium">
           Welcome back to your dashboard
         </h1>
