@@ -8,6 +8,12 @@ importers:
 
   .:
     dependencies:
+      '@azure/msal-browser':
+        specifier: ^5.2.0
+        version: 5.2.0
+      '@azure/msal-react':
+        specifier: ^5.0.4
+        version: 5.0.4(@azure/msal-browser@5.2.0)(react@19.2.4)
       '@tailwindcss/vite':
         specifier: ^4.1.18
         version: 4.1.18(vite@7.3.1(@types/node@24.10.13)(jiti@2.6.1)(lightningcss@1.30.2))
@@ -113,6 +119,21 @@ importers:
         version: 4.0.18(@types/node@24.10.13)(jiti@2.6.1)(lightningcss@1.30.2)
 
 packages:
+
+  '@azure/msal-browser@5.2.0':
+    resolution: {integrity: sha512-YP2XEo6Bsi9urkyWxe5s2yl0ZJhJ46BJjUYIhXe6TUQguj460+wFioztwNAGgL33ECn/s3p0UK6CAQDJ5K7bnw==}
+    engines: {node: '>=0.8.0'}
+
+  '@azure/msal-common@16.0.4':
+    resolution: {integrity: sha512-0KZ9/wbUyZN65JLAx5bGNfWjkD0kRMUgM99oSpZFg7wEOb3XcKIiHrFnIpgyc8zZ70fHodyh8JKEOel1oN24Gw==}
+    engines: {node: '>=0.8.0'}
+
+  '@azure/msal-react@5.0.4':
+    resolution: {integrity: sha512-T75XBZ+QIKcBrR+Vz8g3r+lbsPEF7EL6i/ew5+52zZo1ymyyFAMnQung4rJXeMGzLYKwzB5D49PRpbjf0fg9Tw==}
+    engines: {node: '>=20'}
+    peerDependencies:
+      '@azure/msal-browser': ^5.2.0
+      react: ^19.2.1
 
   '@babel/code-frame@7.29.0':
     resolution: {integrity: sha512-9NhCeYjq9+3uxgdtp20LSiJXJvN0FeCtNGpJxuMFZ1Kv3cWUNb6DOhJwUvcVCzKGR66cw4njwM6hrJLqgOwbcw==}
@@ -2676,6 +2697,17 @@ packages:
         optional: true
 
 snapshots:
+
+  '@azure/msal-browser@5.2.0':
+    dependencies:
+      '@azure/msal-common': 16.0.4
+
+  '@azure/msal-common@16.0.4': {}
+
+  '@azure/msal-react@5.0.4(@azure/msal-browser@5.2.0)(react@19.2.4)':
+    dependencies:
+      '@azure/msal-browser': 5.2.0
+      react: 19.2.4
 
   '@babel/code-frame@7.29.0':
     dependencies:
