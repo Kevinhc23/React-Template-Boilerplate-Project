@@ -1,15 +1,14 @@
 import { useEffect, type FC } from "react";
 import { Link, useNavigate } from "react-router";
 import { Button } from "@/components/ui/button";
-import { useMsal, useIsAuthenticated } from "@azure/msal-react";
+import { useMsalAuth } from "@/hooks/useMsalAuth";
 import { useLoadingStore } from "@/app/store/useLoadingStore";
 import LoadingOverlay from "@/components/widgets/LoadingOverlay";
 import { BancoGuayaquilIcon, MicrosoftIcon } from "@/components/ui/icons";
 import { Lock } from "lucide-react";
 
 const SignInPage: FC = () => {
-  const { instance, inProgress } = useMsal();
-  const isAuthenticated = useIsAuthenticated();
+  const { inProgress, isAuthenticated, login } = useMsalAuth();
   const navigate = useNavigate();
   const showLoading = useLoadingStore((state) => state.showLoading);
   const hideLoading = useLoadingStore((state) => state.hideLoading);
@@ -23,11 +22,7 @@ const SignInPage: FC = () => {
   const handleSignIn = async () => {
     showLoading("Authenticating with Microsoft...");
     try {
-      await instance.loginRedirect({
-        scopes: ["User.Read"],
-        redirectUri: window.location.origin,
-        prompt: "select_account",
-      });
+      await login();
     } catch (error) {
       console.error("MSAL Login Error:", error);
     } finally {
@@ -59,13 +54,13 @@ const SignInPage: FC = () => {
               efficient."
             </p>
             <footer className="text-lg text-white">
-              Infrastructure Operations Team
+              Research And Development Team
             </footer>
           </blockquote>
         </div>
 
         <div className="relative z-10 text-sm text-white">
-          © 2026 Taskora System Corp. Todos los derechos reservados.
+          © 2026 Taskora Platform | Powered by Banco Guayaquil
         </div>
       </div>
 
@@ -77,7 +72,7 @@ const SignInPage: FC = () => {
               Sign In
             </h2>
             <p className="text-slate-500">
-              Use your corporate account to access KPI statistics.
+              Use your corporate account to access the application.
             </p>
           </div>
 
@@ -85,10 +80,10 @@ const SignInPage: FC = () => {
             <Button
               onClick={handleSignIn}
               variant="default"
-              className="group relative flex h-14 w-full items-center justify-center gap-4 rounded-xl border-slate-100 bg-white px-6 text-base font-medium text-slate-700 transition-all hover:border-slate-300 hover:bg-slate-50 active:scale-[0.98] border"
+              className="group relative flex h-14 w-full items-center justify-center gap-4 rounded-sm border-slate-100 bg-white px-6 text-base font-medium text-slate-700 transition-all hover:border-slate-300 hover:bg-slate-50 active:scale-[0.98] border cursor-pointer"
             >
               <MicrosoftIcon />
-              Continuar con Microsoft SSO
+              Continue with Microsoft SSO
             </Button>
 
             <div className="relative">
@@ -120,6 +115,8 @@ const SignInPage: FC = () => {
             <Link
               to="/contact"
               className="font-semibold text-primary hover:underline"
+              viewTransition
+              aria-label="Contact IT"
             >
               Contact IT
             </Link>

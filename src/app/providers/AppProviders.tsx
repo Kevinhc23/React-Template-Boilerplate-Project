@@ -2,8 +2,7 @@ import type { ComponentType, ReactNode } from "react";
 import { TanStackProvider } from "@/app/providers/TanStackProvider";
 import ErrorBoundary from "@/components/widgets/ErrorBoundary";
 import { MsalProvider } from "@azure/msal-react";
-import { msalConfig } from "@/shared/config/auth";
-import { PublicClientApplication } from "@azure/msal-browser";
+import { msalInstance } from "@/lib/msalInstance";
 
 type Props = { children: ReactNode };
 type Provider = ComponentType<Props>;
@@ -23,11 +22,6 @@ const composeProviders = (...p: Provider[]) =>
       ),
     ({ children }: Props) => <>{children}</>,
   );
-
-/**
- * Initialize the MSAL instance.
- */
-export const msalInstance = new PublicClientApplication(msalConfig);
 
 /**
  * Compose the providers.

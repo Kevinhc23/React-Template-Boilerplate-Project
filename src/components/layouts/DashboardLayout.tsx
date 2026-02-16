@@ -2,7 +2,7 @@ import type { FC, CSSProperties } from "react";
 import { Navigate, Outlet } from "react-router";
 import Sidebar from "@/components/widgets/Sidebar";
 import Header from "@/components/widgets/Header";
-import { useIsAuthenticated, useMsal } from "@azure/msal-react";
+import { useMsalAuth } from "@/hooks/useMsalAuth";
 import LoadingOverlay from "@/components/widgets/LoadingOverlay";
 
 type Props = React.ComponentProps<"div">;
@@ -36,8 +36,7 @@ const styles = {
 } satisfies Record<string, CSSProperties>;
 
 const DashboardLayout: FC<Props> = ({ ...rest }) => {
-  const { inProgress } = useMsal();
-  const isAuthenticated = useIsAuthenticated();
+  const { inProgress, isAuthenticated } = useMsalAuth();
 
   if (inProgress !== "none") {
     return <LoadingOverlay />;

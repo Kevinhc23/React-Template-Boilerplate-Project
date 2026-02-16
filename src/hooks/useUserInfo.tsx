@@ -1,4 +1,4 @@
-import { useMsal } from "@azure/msal-react";
+import { useMsalAuth } from "@/hooks/useMsalAuth";
 import { useQuery } from "@tanstack/react-query";
 
 type UserInfo = {
@@ -10,31 +10,27 @@ type UserInfo = {
 };
 
 export const useUserInfo = (): UserInfo => {
-  const { instance, accounts } = useMsal();
-  const account = accounts[0];
+  const { activeAccount, getAccessToken } = useMsalAuth();
 
   const {
     data: avatar,
     isLoading,
     isError,
   } = useQuery({
-    queryKey: ["user-avatar", account?.homeAccountId],
+    queryKey: ["user-avatar", activeAccount?.homeAccountId],
     queryFn: async () => {
-      if (!account) return null;
+      if (!activeAccount) return null;
 
       try {
-        const response = await instance.acquireTokenSilent({
-          scopes: ["User.Read"],
-          account: account,
-        });
-        if (!response.accessToken) {
+        const accessToken = await getAccessToken(["User.Read"]);
+        if (!accessToken) {
           throw new Error("Access token is empty");
         }
         const photoResponse = await fetch(
           "https://graph.microsoft.com/v1.0/me/photo/$value",
           {
             headers: {
-              Authorization: `Bearer ${response.accessToken}`,
+              Authorization: `Bearer ${accessToken}`,
             },
           },
         );
@@ -51,15 +47,15 @@ export const useUserInfo = (): UserInfo => {
         throw error;
       }
     },
-    enabled: !!account,
+    enabled: !!activeAccount,
     staleTime: 1000 * 60 * 30,
     gcTime: 1000 * 60 * 60,
     retry: 1,
   });
 
   return {
-    name: account?.name || "Usuario",
-    email: account?.username || "",
+    name: activeAccount?.name || "Usuario",
+    email: activeAccount?.username || "",
     avatar: avatar ?? null,
     isLoading,
     isError,

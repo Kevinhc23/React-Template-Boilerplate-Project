@@ -3,7 +3,7 @@ import { createRoot } from "react-dom/client";
 import { RouterProvider } from "react-router";
 import router from "@/app/router";
 import "@/index.css";
-import { msalInstance } from "@/app/providers/AppProviders";
+import { msalInstance } from "@/lib/msalInstance";
 
 async function bootstrap() {
   await msalInstance.initialize();

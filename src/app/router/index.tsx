@@ -22,10 +22,6 @@ const router = createBrowserRouter([
         element: <SignInPage />,
       },
       {
-        path: "profile",
-        element: <ProfilePage />,
-      },
-      {
         // Dashboard layout for authenticated users
         path: "/",
         element: <DashboardLayout />,
@@ -37,6 +33,10 @@ const router = createBrowserRouter([
           {
             path: "projects",
             element: <div>Projects</div>,
+          },
+          {
+            path: "profile",
+            element: <ProfilePage />,
           },
         ],
       },

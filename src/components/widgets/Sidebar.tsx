@@ -52,7 +52,7 @@ const Sidebar: FC<SidebarProps> = ({ className, ...rest }) => {
       >
         <section aria-label="Top navigation">
           <div className="flex items-center gap-2 justify-center">
-            <Link to="/">
+            <Link to="/" viewTransition aria-label="Home">
               <BancoGuayaquilIsotipoIcon className="size-7 text-primary" />
             </Link>
           </div>
@@ -67,6 +67,8 @@ const Sidebar: FC<SidebarProps> = ({ className, ...rest }) => {
               <Link
                 to={item.to}
                 key={item.label}
+                viewTransition
+                aria-label={item.label}
                 className={cn(
                   itemClasses,
                   isActive

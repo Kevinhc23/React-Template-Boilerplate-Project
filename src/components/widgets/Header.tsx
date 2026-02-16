@@ -42,6 +42,8 @@ const Header: FC<HeaderProps> = ({ className, ...rest }) => {
                   <Link
                     to="/"
                     className="text-slate-500 hover:text-zinc-500 transition-colors text-base"
+                    viewTransition
+                    aria-label="Home"
                   >
                     Home
                   </Link>
@@ -66,6 +68,8 @@ const Header: FC<HeaderProps> = ({ className, ...rest }) => {
                         <Link
                           to={href}
                           className="text-slate-500 hover:text-zinc-500 transition-colors text-base"
+                          viewTransition
+                          aria-label={formatLabel(segment)}
                         >
                           {formatLabel(segment)}
                         </Link>
