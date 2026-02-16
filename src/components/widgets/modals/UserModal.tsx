@@ -4,8 +4,8 @@ interface UserProps {
 }
 
 export const UserModal = ({ name, role }: UserProps) => (
-  <div className="p-6">
+  <div className="p-6 flex flex-col gap-2">
     <h2 className="text-xl font-bold text-slate-800">{name}</h2>
-    <p className="text-slate-500 mt-1">{role}</p>
+    <p className="text-slate-500">{role}</p>
   </div>
 );

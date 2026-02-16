@@ -28,7 +28,7 @@ const ModalContainer: FC = () => {
             animate={{ scale: 1, opacity: 1, y: 0 }}
             exit={{ scale: 0.9, opacity: 0, y: 10 }}
             transition={{ type: "spring", damping: 25, stiffness: 300 }}
-            className="relative flex flex-col w-full max-w-lg bg-white rounded-3xl shadow-[0_20px_60px_rgba(0,0,0,0.15)] border border-slate-50 overflow-hidden"
+            className="relative flex flex-col w-full max-w-lg bg-white rounded-xl shadow-[0_20px_60px_rgba(0,0,0,0.15)] border border-slate-50 overflow-hidden max-h-[calc(100vh-4rem)] overflow-y-auto"
           >
             <button
               onClick={closeModal}

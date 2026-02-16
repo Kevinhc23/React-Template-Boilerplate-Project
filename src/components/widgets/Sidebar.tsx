@@ -5,6 +5,7 @@ import {
   Bug,
   Database,
   FolderGit2,
+  HelpCircle,
 } from "lucide-react";
 import { Link, useLocation } from "react-router";
 import { cn } from "@/lib/utils";
@@ -89,11 +90,17 @@ const Sidebar: FC<SidebarProps> = ({ className, ...rest }) => {
         </section>
 
         <section aria-label="Bottom navigation" className="flex justify-center">
-          <button className="p-2 rounded-lg hover:bg-secondary/40 transition-colors cursor-pointer">
-            <div className="size-6 bg-primary text-primary-foreground flex items-center justify-center rounded-full p-4">
-              <span>KH</span>
-            </div>
-          </button>
+          <Link
+            to="/about"
+            viewTransition
+            aria-label="About"
+            className={cn(
+              itemClasses,
+              "text-slate-400 hover:bg-primary/10 hover:text-primary",
+            )}
+          >
+            <HelpCircle className="size-6 stroke-[1.5px] " />
+          </Link>
         </section>
       </div>
     </aside>
