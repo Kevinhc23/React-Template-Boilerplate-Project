@@ -40,16 +40,12 @@ const DashboardLayout: FC<Props> = ({ ...rest }) => {
   const isAuthenticated = useIsAuthenticated();
 
   if (inProgress !== "none") {
-    console.log("Loading");
     return <LoadingOverlay />;
   }
 
   if (!isAuthenticated) {
-    console.log("Not Authenticated");
     return <Navigate to="/signin" replace />;
   }
-
-  console.log("Authenticated");
 
   return (
     <div {...rest} style={styles.container}>

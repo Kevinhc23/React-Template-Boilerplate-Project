@@ -1,30 +1,28 @@
 import { useEffect, type FC } from "react";
+import { Link, useNavigate } from "react-router";
 import { Button } from "@/components/ui/button";
-import { useMsal } from "@azure/msal-react";
+import { useMsal, useIsAuthenticated } from "@azure/msal-react";
 import { useLoadingStore } from "@/app/store/useLoadingStore";
+import LoadingOverlay from "@/components/widgets/LoadingOverlay";
+import { BancoGuayaquilIcon, MicrosoftIcon } from "@/components/ui/icons";
+import { Lock } from "lucide-react";
 
 const SignInPage: FC = () => {
-  const { instance } = useMsal();
+  const { instance, inProgress } = useMsal();
+  const isAuthenticated = useIsAuthenticated();
+  const navigate = useNavigate();
   const showLoading = useLoadingStore((state) => state.showLoading);
   const hideLoading = useLoadingStore((state) => state.hideLoading);
 
   useEffect(() => {
-    const accounts = instance.getAllAccounts();
-    if (accounts.length > 0) {
-      instance.setActiveAccount(accounts[0]);
-      instance.loginRedirect({
-        scopes: ["User.Read"],
-        redirectUri: window.location.origin,
-        prompt: "select_account",
-      });
-      console.log("[SignInPage] Active account set to:", accounts[0].username);
+    if (inProgress === "none" && isAuthenticated) {
+      navigate("/", { replace: true });
     }
-  }, [instance]);
+  }, [inProgress, isAuthenticated, navigate]);
 
   const handleSignIn = async () => {
-    showLoading("Autenticando con Microsoft...");
+    showLoading("Authenticating with Microsoft...");
     try {
-      console.log("[SignInPage] Initiating loginRedirect");
       await instance.loginRedirect({
         scopes: ["User.Read"],
         redirectUri: window.location.origin,
@@ -32,9 +30,14 @@ const SignInPage: FC = () => {
       });
     } catch (error) {
       console.error("MSAL Login Error:", error);
+    } finally {
       hideLoading();
     }
   };
+
+  if (inProgress !== "none" || isAuthenticated) {
+    return <LoadingOverlay />;
+  }
 
   return (
     <div className="flex min-h-dvh w-full bg-white">
@@ -46,12 +49,7 @@ const SignInPage: FC = () => {
         </div>
 
         <div className="relative z-10 flex items-center gap-2 text-white">
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary shadow-lg shadow-primary/20">
-            <svg viewBox="0 0 24 24" className="h-5 w-5 fill-white">
-              <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
-            </svg>
-          </div>
-          <span className="text-xl font-bold tracking-tight">Taskora</span>
+          <BancoGuayaquilIcon className="w-24" />
         </div>
 
         <div className="relative z-10">
@@ -88,20 +86,9 @@ const SignInPage: FC = () => {
             <Button
               onClick={handleSignIn}
               variant="default"
-              className="group relative flex h-14 w-full items-center justify-center gap-4 rounded-xl border-slate-200 bg-white px-6 text-base font-medium text-slate-700 transition-all hover:border-slate-300 hover:bg-slate-50 active:scale-[0.98]"
+              className="group relative flex h-14 w-full items-center justify-center gap-4 rounded-xl border-slate-100 bg-white px-6 text-base font-medium text-slate-700 transition-all hover:border-slate-300 hover:bg-slate-50 active:scale-[0.98] border"
             >
-              {/* Logo de Microsoft Original Colors */}
-              <svg className="h-5 w-5" viewBox="0 0 23 23">
-                <path fill="#f3f3f3" d="M0 0h11v11H0z" />
-                <path fill="#f3f3f3" d="M12 0h11v11H12z" />
-                <path fill="#f3f3f3" d="M0 12h11v11H0z" />
-                <path fill="#f3f3f3" d="M12 12h11v11H12z" />
-                {/* Los colores de Microsoft se pueden añadir aquí si se prefiere */}
-                <rect width="10" height="10" fill="#f25022" />
-                <rect width="10" height="10" x="11" fill="#7fbb00" />
-                <rect width="10" height="10" y="11" fill="#00a1f1" />
-                <rect width="10" height="10" x="11" y="11" fill="#ffbb00" />
-              </svg>
+              <MicrosoftIcon />
               Continuar con Microsoft SSO
             </Button>
 
@@ -119,17 +106,7 @@ const SignInPage: FC = () => {
             <div className="rounded-2xl bg-slate-50 p-4 border border-slate-100">
               <div className="flex gap-3">
                 <div className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-primary text-white">
-                  <svg
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                    className="h-3 w-3"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M10 1a4.5 4.5 0 00-4.5 4.5V9H5a2 2 0 00-2 2v6a2 2 0 002 2h10a2 2 0 002-2v-6a2 2 0 00-2-2h-.5V5.5A4.5 4.5 0 0010 1zm3 8V5.5a3 3 0 10-6 0V9h6z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
+                  <Lock className="h-3 w-3" />
                 </div>
                 <p className="text-xs leading-relaxed text-slate-600">
                   Su inicio de sesión está protegido por políticas de acceso
@@ -141,9 +118,12 @@ const SignInPage: FC = () => {
 
           <div className="text-center text-sm text-slate-400">
             ¿Problemas con el acceso?{" "}
-            <a href="#" className="font-semibold text-primary hover:underline">
+            <Link
+              to="/contact"
+              className="font-semibold text-primary hover:underline"
+            >
               Contactar a IT
-            </a>
+            </Link>
           </div>
         </div>
       </div>
