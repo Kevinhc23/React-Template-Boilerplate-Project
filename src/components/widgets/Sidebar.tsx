@@ -4,7 +4,7 @@ import {
   Settings,
   Bug,
   Database,
-  FolderKanban,
+  Megaphone,
   HelpCircle,
 } from "lucide-react";
 import { Link, useLocation } from "react-router";
@@ -26,9 +26,9 @@ const Sidebar: FC<SidebarProps> = ({ className, ...rest }) => {
   const navItems: NavItem[] = [
     { to: "/", icon: LayoutPanelLeft, label: "Dashboard" },
     {
-      to: "/projects",
-      icon: FolderKanban,
-      label: "Projects",
+      to: "/campaigns",
+      icon: Megaphone,
+      label: "Campaigns",
     },
     { to: "/database", icon: Database, label: "Database" },
     {

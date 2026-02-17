@@ -1,17 +1,20 @@
 import { useState, useMemo } from "react";
-import { Search, FolderKanban, Plus } from "lucide-react";
+import { Search, Megaphone, Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { motion, AnimatePresence } from "motion/react";
-import ProjectCard from "@/components/widgets/cards/projectCards";
+import CampaignCard from "@/components/widgets/cards/campaignCard";
 import { Link } from "react-router";
-import type { Project } from "@/shared/entities/project";
+import type { Campaign } from "@/shared/entities/campaign";
 import {
   SearchFilterBar,
   type FilterGroup,
 } from "@/components/widgets/search-and-filters/SearchFilterBar";
 
 // --- Constants ---
-const searchKeys = (project: Project) => [project.title, project.description];
+const searchKeys = (campaign: Campaign) => [
+  campaign.name,
+  campaign.description,
+];
 
 const FILTER_OPTIONS: FilterGroup[] = [
   {
@@ -20,9 +23,10 @@ const FILTER_OPTIONS: FilterGroup[] = [
     type: "single",
     options: [
       { label: "All Status", value: "all" },
-      { label: "To Do", value: "todo" },
-      { label: "In Progress", value: "in-progress" },
-      { label: "Complete", value: "complete" },
+      { label: "Draft", value: "draft" },
+      { label: "Active", value: "active" },
+      { label: "Paused", value: "paused" },
+      { label: "Completed", value: "completed" },
     ],
   },
   {
@@ -38,37 +42,45 @@ const FILTER_OPTIONS: FilterGroup[] = [
 ];
 
 // --- Mock Data ---
-const Projects: Project[] = [
+const Campaigns: Campaign[] = [
   {
     id: "1",
-    title: "Prototopi Mobile App",
-    description: "Evaluate...",
-    priority: "Medium",
-    status: "todo",
+    name: "Summer Sale 2025",
+    description:
+      "Main summer promotional campaign targeting youth demographics.",
+    priority: "High",
+    status: "active",
     date: "Jun 8, 2025",
+    adGroups: [
+      {
+        id: "ag1",
+        name: "Instagram Stories",
+        status: "active",
+        ads: [],
+      },
+      {
+        id: "ag2",
+        name: "Facebook Feed",
+        status: "active",
+        ads: [],
+      },
+    ],
     members: [
       {
         name: "John Doe",
         avatar: "https://github.com/shadcn.png",
-      },
-      {
-        name: "Jane Doe",
-        avatar: "https://github.com/vercel.png",
       },
     ],
   },
   {
     id: "2",
-    title: "YellyBox Project",
-    description: "Innovative...",
-    priority: "Low",
-    status: "in-progress",
-    date: "Jun 8, 2025",
+    name: "Brand Awareness Q3",
+    description: "Increasing brand reach through video ads.",
+    priority: "Medium",
+    status: "draft",
+    date: "Jul 1, 2025",
+    adGroups: [],
     members: [
-      {
-        name: "John Doe",
-        avatar: "https://github.com/shadcn.png",
-      },
       {
         name: "Jane Doe",
         avatar: "https://github.com/vercel.png",
@@ -77,105 +89,58 @@ const Projects: Project[] = [
   },
   {
     id: "3",
-    title: "Mantraman (Branding)",
-    description: "Elevate...",
+    name: "Retargeting Cart Abandoners",
+    description: "Dynamic product ads for users who left checkout.",
     priority: "High",
-    status: "complete",
-    date: "Jun 8, 2025",
+    status: "paused",
+    date: "Jun 15, 2025",
+    adGroups: [
+      {
+        id: "ag3",
+        name: "Display Network",
+        status: "paused",
+        ads: [],
+      },
+    ],
     members: [
       {
         name: "John Doe",
         avatar: "https://github.com/shadcn.png",
-      },
-      {
-        name: "Jane Doe",
-        avatar: "https://github.com/vercel.png",
       },
     ],
   },
   {
     id: "4",
-    title: "Proyecto Carnaval",
-    description: "Carnaval...",
-    priority: "High",
-    status: "complete",
-    date: "Jun 8, 2025",
-    members: [
-      {
-        name: "John Doe",
-        avatar: "https://github.com/shadcn.png",
-      },
-      {
-        name: "Jane Doe",
-        avatar: "https://github.com/vercel.png",
-      },
-    ],
+    name: "Holiday Special",
+    description: "Early bird specials for holiday season.",
+    priority: "Medium",
+    status: "draft",
+    date: "Aug 10, 2025",
+    adGroups: [],
+    members: [],
   },
   {
     id: "5",
-    title: "Proyecto Carnaval",
-    description: "Carnaval...",
+    name: "New Product Launch",
+    description: "Launch campaign for the new product line X.",
     priority: "High",
-    status: "complete",
-    date: "Jun 8, 2025",
-    members: [
-      {
-        name: "John Doe",
-        avatar: "https://github.com/shadcn.png",
-      },
-      {
-        name: "Jane Doe",
-        avatar: "https://github.com/vercel.png",
-      },
-    ],
-  },
-  {
-    id: "6",
-    title: "Proyecto Carnaval",
-    description: "Carnaval...",
-    priority: "High",
-    status: "complete",
-    date: "Jun 8, 2025",
-    members: [
-      {
-        name: "John Doe",
-        avatar: "https://github.com/shadcn.png",
-      },
-      {
-        name: "Jane Doe",
-        avatar: "https://github.com/vercel.png",
-      },
-    ],
-  },
-  {
-    id: "7",
-    title: "Proyecto Carnaval",
-    description: "Carnaval...",
-    priority: "High",
-    status: "complete",
-    date: "Jun 8, 2025",
-    members: [
-      {
-        name: "John Doe",
-        avatar: "https://github.com/shadcn.png",
-      },
-      {
-        name: "Jane Doe",
-        avatar: "https://github.com/vercel.png",
-      },
-    ],
+    status: "completed",
+    date: "May 20, 2025",
+    adGroups: [],
+    members: [],
   },
 ];
 
-const ProjectsPage = () => {
-  const [searchedProjects, setSearchedProjects] = useState<Project[]>(Projects);
+const CampaignsPage = () => {
+  const [searchedCampaigns, setSearchedCampaigns] =
+    useState<Campaign[]>(Campaigns);
   const [filters, setFilters] = useState<Record<string, string | string[]>>({
     status: "all",
     priority: [],
   });
 
-  const filteredProjects = useMemo(() => {
-    let result = searchedProjects;
+  const filteredCampaigns = useMemo(() => {
+    let result = searchedCampaigns;
 
     // Filter by Status
     if (filters.status && filters.status !== "all") {
@@ -189,7 +154,7 @@ const ProjectsPage = () => {
     }
 
     return result;
-  }, [searchedProjects, filters]);
+  }, [searchedCampaigns, filters]);
 
   const handleFilterChange = (groupId: string, value: string) => {
     setFilters((prev) => {
@@ -215,33 +180,32 @@ const ProjectsPage = () => {
         <div className="space-y-1">
           <div className="flex items-center gap-2">
             <div className="p-2 bg-primary/10 rounded-lg">
-              <FolderKanban className="size-6 text-primary" />
+              <Megaphone className="size-6 text-primary" />
             </div>
             <h1 className="text-2xl font-bold tracking-tight text-foreground">
-              Projects
+              Campaigns
             </h1>
           </div>
           <p className="text-sm text-muted-foreground font-medium">
-            Manage your initiatives and track progress in real-time.
+            Manage your campaigns, ad groups and ads in real-time.
           </p>
         </div>
 
         <Button
-          className="rounded-xl bg-primary hover:bg-primary/90 text-white shadow-lg min-h-10 shadow-primary/20 transition-all active:scale-95"
+          className="rounded-xl bg-primary hover:bg-primary/90 text-white shadow-lg min-h-12 shadow-primary/20 transition-all active:scale-95 px-6 hover:cursor-pointer hover:scale-105"
           size="lg"
           variant="default"
         >
-          <Plus className="mr-2 size-4" />
-          New Project
+          New Campaign
         </Button>
       </header>
 
       {/* Search & Filter Bar */}
       <SearchFilterBar
-        data={Projects}
+        data={Campaigns}
         searchKeys={searchKeys}
-        onResultChange={setSearchedProjects}
-        placeholder="Search projects..."
+        onResultChange={setSearchedCampaigns}
+        placeholder="Search campaigns..."
         filterOptions={FILTER_OPTIONS}
         selectedFilters={filters}
         onFilterChange={handleFilterChange}
@@ -255,17 +219,17 @@ const ProjectsPage = () => {
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
         >
           <AnimatePresence mode="popLayout">
-            {filteredProjects.map((project) => (
+            {filteredCampaigns.map((campaign) => (
               <motion.div
-                key={project.id}
+                key={campaign.id}
                 layout
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.2, ease: "easeIn" }}
               >
-                <Link to={`/projects/${project.id}`}>
-                  <ProjectCard project={project} />
+                <Link to={`/campaigns/${campaign.id}`}>
+                  <CampaignCard campaign={campaign} />
                 </Link>
               </motion.div>
             ))}
@@ -274,7 +238,7 @@ const ProjectsPage = () => {
 
         {/* Empty State */}
         <AnimatePresence>
-          {filteredProjects.length === 0 && (
+          {filteredCampaigns.length === 0 && (
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -284,7 +248,7 @@ const ProjectsPage = () => {
                 <Search className="size-10 opacity-20" />
               </div>
               <p className="text-lg font-semibold text-foreground">
-                No projects found
+                No campaigns found
               </p>
               <p className="text-sm">
                 Try adjusting your search terms or filters.
@@ -297,4 +261,4 @@ const ProjectsPage = () => {
   );
 };
 
-export default ProjectsPage;
+export default CampaignsPage;

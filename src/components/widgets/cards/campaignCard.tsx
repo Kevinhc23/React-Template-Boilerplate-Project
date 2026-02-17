@@ -1,7 +1,7 @@
 import { type FC, memo } from "react";
 import { motion } from "motion/react";
 import { cn } from "@/lib/utils";
-import type { Priority, Status, Project } from "@/shared/entities/project";
+import type { Priority, Status, Campaign } from "@/shared/entities/campaign";
 
 const stylesPriority = {
   High: "bg-red-100 text-red-600",
@@ -9,17 +9,18 @@ const stylesPriority = {
   Low: "bg-emerald-100 text-emerald-600",
 } satisfies Record<Priority, string>;
 
-const stylesStatus = {
-  todo: "bg-red-100 text-red-600",
-  "in-progress": "bg-orange-100 text-orange-600",
-  complete: "bg-emerald-100 text-emerald-600",
-} satisfies Record<Status, string>;
+const stylesStatus: Record<Status, string> = {
+  draft: "bg-gray-100 text-gray-600",
+  active: "bg-emerald-100 text-emerald-600",
+  paused: "bg-orange-100 text-orange-600",
+  completed: "bg-blue-100 text-blue-600",
+};
 
-const ProjectCard: FC<{ project: Project }> = memo(
-  ({ project }) => {
+const CampaignCard: FC<{ campaign: Campaign }> = memo(
+  ({ campaign }) => {
     return (
       <motion.div
-        key={project.id}
+        key={campaign.id}
         layout
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
@@ -29,53 +30,59 @@ const ProjectCard: FC<{ project: Project }> = memo(
       >
         <div className="flex justify-between items-center">
           <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">
-            {project.date}
+            {campaign.date}
           </span>
           <span
             className={cn(
               "px-3 py-1 rounded-sm text-[10px] font-bold uppercase",
-              stylesPriority[project.priority],
+              stylesPriority[campaign.priority],
             )}
           >
-            {project.priority}
+            {campaign.priority}
           </span>
         </div>
 
         <div className="space-y-1">
           <h3 className="font-bold text-foreground group-hover:text-primary transition-colors">
-            {project.title}
+            {campaign.name}
           </h3>
           <p className="text-sm text-muted-foreground line-clamp-2 leading-relaxed">
-            {project.description}
+            {campaign.description}
           </p>
         </div>
 
         <div className="mt-auto pt-4 border-t border-border/40 flex justify-between items-center">
-          <div className="flex -space-x-2">
-            {project.members.map((member, i) => (
-              <img
-                key={i}
-                src={member.avatar}
-                alt="member"
-                className="size-7 rounded-full border-2 border-card object-cover"
-              />
-            ))}
+          <div className="flex items-center gap-2">
+            <span className="text-xs text-muted-foreground font-medium">
+              {campaign.adGroups?.length || 0} Ad Groups
+            </span>
+            {/* Members overlap removed as it might not be primary for campaigns, but keeping if needed */}
+            <div className="flex -space-x-2">
+              {campaign.members?.slice(0, 3).map((member, i) => (
+                <img
+                  key={i}
+                  src={member.avatar}
+                  alt={member.name}
+                  className="size-6 rounded-full border-2 border-card object-cover"
+                />
+              ))}
+            </div>
           </div>
           <span
             className={cn(
-              "text-[11px] font-bold px-3 py-1 rounded-sm",
-              stylesStatus[project.status],
+              "text-[11px] font-bold px-3 py-1 rounded-sm uppercase",
+              stylesStatus[campaign.status],
             )}
           >
-            {project.status.replace("-", " ")}
+            {campaign.status}
           </span>
         </div>
       </motion.div>
     );
   },
   (prevProps, nextProps) => {
-    return prevProps.project.id === nextProps.project.id;
+    return prevProps.campaign.id === nextProps.campaign.id;
   },
 );
 
-export default ProjectCard;
+export default CampaignCard;
