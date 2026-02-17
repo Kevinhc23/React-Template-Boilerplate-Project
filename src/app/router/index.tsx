@@ -7,6 +7,7 @@ import { lazy } from "react";
 const ProfilePage = lazy(() => import("@/pages/profile/page"));
 const HomePage = lazy(() => import("@/pages/home/page"));
 const NotFoundPage = lazy(() => import("@/pages/not-found/page"));
+const ProjectsPage = lazy(() => import("@/pages/projects/page"));
 
 /**
  * The router configuration for the application.
@@ -32,7 +33,7 @@ const router = createBrowserRouter([
           },
           {
             path: "projects",
-            element: <div>Projects</div>,
+            element: <ProjectsPage />,
           },
           {
             path: "profile",

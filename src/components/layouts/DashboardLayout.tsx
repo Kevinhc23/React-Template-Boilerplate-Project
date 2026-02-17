@@ -10,7 +10,7 @@ type Props = React.ComponentProps<"div">;
 const styles = {
   container: {
     display: "grid",
-    minHeight: "100dvh",
+    height: "100dvh",
     overflow: "hidden",
     gridTemplateColumns: "auto 1fr",
     gridTemplateRows: "auto 1fr",
@@ -21,7 +21,7 @@ const styles = {
   },
   sidebar: {
     gridArea: "sidebar",
-    overflowY: "auto",
+    overflowY: "hidden",
     zIndex: 10,
   },
   header: {
@@ -30,7 +30,7 @@ const styles = {
   },
   content: {
     gridArea: "content",
-    overflowY: "auto",
+    overflowY: "hidden",
     padding: "1rem",
   },
 } satisfies Record<string, CSSProperties>;
