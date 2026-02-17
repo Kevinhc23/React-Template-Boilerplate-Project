@@ -1,20 +1,7 @@
 import { type FC, memo } from "react";
 import { motion } from "motion/react";
 import { cn } from "@/lib/utils";
-
-// --- Tipos ---
-type Priority = "Low" | "Medium" | "High";
-type Status = "todo" | "in-progress" | "complete";
-
-interface Project {
-  id: string;
-  title: string;
-  description: string;
-  priority: Priority;
-  status: Status;
-  date: string;
-  members: string[];
-}
+import type { Priority, Status, Project } from "@/shared/entities/project";
 
 const stylesPriority = {
   High: "bg-red-100 text-red-600",
@@ -65,10 +52,10 @@ const ProjectCard: FC<{ project: Project }> = memo(
 
         <div className="mt-auto pt-4 border-t border-border/40 flex justify-between items-center">
           <div className="flex -space-x-2">
-            {project.members.map((avatar, i) => (
+            {project.members.map((member, i) => (
               <img
                 key={i}
-                src={avatar}
+                src={member.avatar}
                 alt="member"
                 className="size-7 rounded-full border-2 border-card object-cover"
               />
