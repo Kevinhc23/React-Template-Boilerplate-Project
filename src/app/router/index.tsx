@@ -8,6 +8,9 @@ const ProfilePage = lazy(() => import("@/pages/profile/page"));
 const HomePage = lazy(() => import("@/pages/home/page"));
 const NotFoundPage = lazy(() => import("@/pages/not-found/page"));
 const CampaignsPage = lazy(() => import("@/pages/campaigns/page"));
+const CampaignDetailPage = lazy(
+  () => import("@/pages/campaigns/campaign/page"),
+);
 
 /**
  * The router configuration for the application.
@@ -34,6 +37,10 @@ const router = createBrowserRouter([
           {
             path: "campaigns",
             element: <CampaignsPage />,
+          },
+          {
+            path: "campaigns/:id",
+            element: <CampaignDetailPage />,
           },
           {
             path: "profile",

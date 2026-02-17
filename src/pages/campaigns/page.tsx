@@ -1,14 +1,12 @@
 import { useState, useMemo } from "react";
-import { Search, Megaphone, Plus } from "lucide-react";
+import { Search, Megaphone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { motion, AnimatePresence } from "motion/react";
 import CampaignCard from "@/components/widgets/cards/campaignCard";
 import { Link } from "react-router";
 import type { Campaign } from "@/shared/entities/campaign";
-import {
-  SearchFilterBar,
-  type FilterGroup,
-} from "@/components/widgets/search-and-filters/SearchFilterBar";
+import { SearchFilterBar } from "@/components/widgets/search-and-filters/SearchFilterBar";
+import type { FilterGroup } from "@/shared/entities/filters/filter";
 
 // --- Constants ---
 const searchKeys = (campaign: Campaign) => [
@@ -44,7 +42,7 @@ const FILTER_OPTIONS: FilterGroup[] = [
 // --- Mock Data ---
 const Campaigns: Campaign[] = [
   {
-    id: "1",
+    id: "d1366ad3-c866-48bd-94d0-4ef288da65d4",
     name: "Summer Sale 2025",
     description:
       "Main summer promotional campaign targeting youth demographics.",
@@ -55,12 +53,14 @@ const Campaigns: Campaign[] = [
       {
         id: "ag1",
         name: "Instagram Stories",
+        description: "Stories for youth demographic",
         status: "active",
         ads: [],
       },
       {
         id: "ag2",
         name: "Facebook Feed",
+        description: "Standard feed ads",
         status: "active",
         ads: [],
       },
@@ -73,7 +73,7 @@ const Campaigns: Campaign[] = [
     ],
   },
   {
-    id: "2",
+    id: "ea2ef5fd-03a4-472d-aa83-73e37e30f08b",
     name: "Brand Awareness Q3",
     description: "Increasing brand reach through video ads.",
     priority: "Medium",
@@ -88,7 +88,7 @@ const Campaigns: Campaign[] = [
     ],
   },
   {
-    id: "3",
+    id: "83d3eab7-1257-4148-a599-c9217dfee0c7",
     name: "Retargeting Cart Abandoners",
     description: "Dynamic product ads for users who left checkout.",
     priority: "High",
@@ -98,6 +98,7 @@ const Campaigns: Campaign[] = [
       {
         id: "ag3",
         name: "Display Network",
+        description: "Google display network ads",
         status: "paused",
         ads: [],
       },
@@ -110,7 +111,7 @@ const Campaigns: Campaign[] = [
     ],
   },
   {
-    id: "4",
+    id: "c55e59f6-4808-43c2-9be8-d805e9ea672a",
     name: "Holiday Special",
     description: "Early bird specials for holiday season.",
     priority: "Medium",
@@ -120,7 +121,7 @@ const Campaigns: Campaign[] = [
     members: [],
   },
   {
-    id: "5",
+    id: "84266487-5777-4668-990a-325850484781",
     name: "New Product Launch",
     description: "Launch campaign for the new product line X.",
     priority: "High",

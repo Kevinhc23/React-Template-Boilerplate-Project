@@ -11,6 +11,7 @@ export type Ad = {
 export type AdGroup = {
     id: string;
     name: string;
+    description: string;
     ads: Ad[];
     status: Status;
 };

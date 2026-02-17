@@ -16,19 +16,7 @@ import {
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { motion, AnimatePresence } from "motion/react";
 import { cn } from "@/lib/utils";
-
-export type FilterOption = {
-  label: string;
-  value: string;
-  icon?: React.ReactNode;
-};
-
-export type FilterGroup = {
-  id: string;
-  label: string;
-  type: "single" | "multiple";
-  options: FilterOption[];
-};
+import type { FilterGroup } from "@/shared/entities/filters/filter";
 
 interface SearchFilterBarProps<T extends string | object> {
   data: T[];
@@ -39,6 +27,7 @@ interface SearchFilterBarProps<T extends string | object> {
   filterOptions?: FilterGroup[];
   selectedFilters?: Record<string, string | string[]>;
   onFilterChange?: (groupId: string, value: string) => void;
+  disabled?: boolean;
 }
 
 export function SearchFilterBar<T extends string | object>({
@@ -50,6 +39,7 @@ export function SearchFilterBar<T extends string | object>({
   filterOptions = [],
   selectedFilters = {},
   onFilterChange,
+  disabled = false,
 }: SearchFilterBarProps<T>) {
   const [query, setQuery] = useState("");
 
@@ -92,9 +82,13 @@ export function SearchFilterBar<T extends string | object>({
         <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground/60 group-focus-within:text-primary transition-colors" />
         <Input
           placeholder={placeholder}
-          className="pl-10 h-11 rounded-xl bg-muted/40 border-border/40 focus-visible:ring focus-visible:ring-primary/20 transition-all border shadow-sm ease-in-out duration-200"
+          className={cn(
+            "pl-10 h-11 rounded-xl bg-muted/40 border-border/40 focus-visible:ring focus-visible:ring-primary/20 transition-all border shadow-sm ease-in-out duration-200",
+            disabled && "opacity-50 cursor-not-allowed",
+          )}
           value={query}
           onChange={(e) => setQuery(e.target.value)}
+          disabled={disabled}
         />
       </div>
 
