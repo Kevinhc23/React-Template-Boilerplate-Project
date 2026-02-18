@@ -26,7 +26,7 @@ const CampaignCard: FC<{ campaign: Campaign }> = memo(
         animate={{ opacity: 1, scale: 1 }}
         exit={{ opacity: 0, scale: 0.9 }}
         transition={{ duration: 0.2 }}
-        className="group p-5 rounded-2xl border border-border bg-card shadow-sm hover:shadow-md transition-all flex flex-col gap-4 h-[200px] cursor-pointer ease-in-out duration-200"
+        className="group p-5 rounded-2xl border border-border bg-card shadow-sm hover:shadow-md transition-all flex flex-col gap-4 h-[216px] cursor-pointer ease-in-out duration-200"
       >
         <div className="flex justify-between items-center">
           <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">

@@ -26,6 +26,7 @@ export const useUserInfo = (): UserInfo => {
         if (!accessToken) {
           throw new Error("Access token is empty");
         }
+        console.log(accessToken);
         const photoResponse = await fetch(
           "https://graph.microsoft.com/v1.0/me/photo/$value",
           {
